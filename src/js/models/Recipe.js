@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { key, proxy, apiAppID, apiKey } from '../config';
-import { controlAddRecipe } from '..';
+// import { apiAppID, apiKey } from '../config';
 
 export default class Recipe {
     constructor(id) {
@@ -13,6 +12,9 @@ export default class Recipe {
             const proxy = 'https://cors-anywhere.herokuapp.com/';
             const baseURL = `https://api.edamam.com`;
             const encodedURI = encodeURIComponent(`${url}${this.id}`);
+            const apiAppID = process.env.apiAppID;
+            const apiKey = process.env.apiKey;
+
             const res = await axios(`${proxy}${baseURL}/search?r=${encodedURI}&app_id=${apiAppID}&app_key=${apiKey}`)
             // const res = await axios(`${proxy}https://www.food2fork.com/api/get?key=${key}&rId=${this.id}`);
             this.img = res.data[0].image;

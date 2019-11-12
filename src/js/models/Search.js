@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { apiAppID, apiKey } from '../config';
-
+// import { apiAppID, apiKey } from '../config';
 
 export default class Search {
   constructor(query) {
@@ -8,10 +7,12 @@ export default class Search {
   };
 
   async getResults() {
-
     try {
         const proxy = 'https://cors-anywhere.herokuapp.com/';
         const baseURL = 'https://api.edamam.com';
+        const apiAppID = process.env.apiAppID;
+        const apiKey = process.env.apiKey;
+
         const res = await axios(`${proxy}${baseURL}/search?q=${this.query}&from=0&to=50&app_id=${apiAppID}&app_key=${apiKey}`, {
           headers: {
             'Access-Contoll-Allow-Origin': '*'
