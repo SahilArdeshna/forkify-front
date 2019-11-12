@@ -33,11 +33,16 @@ export default class Search {
           'Authorization': window.localStorage.getItem('forkifyToken')
         }
       });
+
+      if (!res.data) {
+        alert('Recipes not found! Please add recipes!');
+      }
+
       res.data.forEach(resData => {
         resData.favRecipe = true;
         recipes.push({recipe: resData})
       });       
-      this.result = recipes;
+      this.result = recipes;      
     } catch(error) {
       alert(error);
     }
