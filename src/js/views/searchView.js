@@ -146,7 +146,7 @@ export const renderResults = (recipes, page = 1, resPerPage = 10)  => {
   renderGoBack();
 
   // Clear URL history
-  const newUrl = 'http://localhost:8080';
+  const newUrl = 'https://forkify-front.herokuapp.com';
   history.pushState({}, null, newUrl);
 
   if (recipes.length > 10) {

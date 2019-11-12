@@ -7,7 +7,7 @@ import * as searchView from './searchView';
 // Clear UI
 export const clearUI = () => {
     // Clear history
-    history.pushState({}, null, 'http://localhost:8080');
+    history.pushState({}, null, 'https://forkify-front.herokuapp.com');
 
     // Clear UI
     $('.results')[0].style.display = 'none';
@@ -86,7 +86,7 @@ export const goback = () => {
         e.preventDefault();
 
         // Chang url history
-        const newUrl = 'http://localhost:8080';
+        const newUrl = 'https://forkify-front.herokuapp.com';
         history.pushState({}, null, newUrl);
 
         // Check for hide elements

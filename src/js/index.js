@@ -330,7 +330,7 @@ async function showContainer () {
     $('.logout').click(async (e) => {
       e.preventDefault();
 
-      const newUrl = 'http://localhost:8080';
+      const newUrl = 'https://forkify-front.herokuapp.com';
       history.pushState({}, null, newUrl);
           
       // Logout user
@@ -434,5 +434,5 @@ export const controlAddRecipe = () => {
 };
 
 $(window).on('load', (e) => {
-  history.pushState({}, null, 'http://localhost:8080');
+  history.pushState({}, null, 'https://forkify-front.herokuapp.com');
 });
