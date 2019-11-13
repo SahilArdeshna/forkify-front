@@ -108,11 +108,11 @@ export const goback = () => {
             $('.recipe')[0].textContent = '';
 
         } else {
-            // Update searchView UI
-            index.controlSearch();
-    
             // Go back 1 step
-            searchView.renderGoBack();  
+            searchView.renderGoBack();
+
+            // Update searchView UI
+            index.controlSearch();    
         }                
     });
 };
