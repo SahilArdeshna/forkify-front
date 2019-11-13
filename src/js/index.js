@@ -139,21 +139,26 @@ async function showContainer () {
           // Get recipe from DATABASE
           result = await state.recipe.getRecipeFromDb();
         }
-        
-        // if (typeof result.ingredients[0] != 'object') {
+        console.log(result, 1);
+        if (result) {
           // parse ingredients
           state.recipe.parseIngredients();
-        // }
+          
+          console.log(result, 2);
 
-        if (state.recipe.time < 5) {
-          // Calculate servings and time
-          state.recipe.calcTime();
-          state.recipe.calcServings();
+          if (state.recipe.time < 5) {
+            // Calculate servings and time
+            state.recipe.calcTime();
+            state.recipe.calcServings();
+          }
+  
+          // Render recipe  
+          clearLoader();
+          console.log(result, 3);
+          recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
         }
+        console.log(result, 4);
 
-        // Render recipe  
-        clearLoader();
-        recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
       } catch (err) {
         alert("Error processing recipe!");
       }
