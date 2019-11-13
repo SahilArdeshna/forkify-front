@@ -139,12 +139,12 @@ async function showContainer () {
           // Get recipe from DATABASE
           result = await state.recipe.getRecipeFromDb();
         }
-        
+      
         if (result) {
           // parse ingredients
           state.recipe.parseIngredients();
         
-          if (state.recipe.time < 5) {
+          if (!state.recipe.time || state.recipe.time < 5) {
             // Calculate servings and time
             state.recipe.calcTime();
             state.recipe.calcServings();

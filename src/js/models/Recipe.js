@@ -55,7 +55,11 @@ export default class Recipe {
         // Assuming that we need 15 min for each 3 ingredients
         const numIng = this.ingredients.length;
         const period = Math.ceil(numIng / 3);
-        this.time = period * 15;
+        if (numIng >= 6) {
+            this.time = period * 12;
+        } else if (numIng < 6) {
+            this.time = period * 15;
+        }
         this.times = this.time;
     };
 
