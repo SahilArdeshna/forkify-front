@@ -1,7 +1,6 @@
 import * as index from '../index';
 import * as AddRecipe from '../models/AddRecipe';
 import * as EditRecipe from '../models/EditRecipe';
-import * as likeView from './likeView';
 import * as searchView from './searchView';
 
 // Clear UI
@@ -84,6 +83,10 @@ export const recipeForm = (edit, recipe) => {
 export const goback = () => {
     $('.go__back').click(e => {
         e.preventDefault();
+
+        if ($('.results__list')[0].textContent != '') {
+            searchView.removeHighlightSelected();
+        }
 
         // Chang url history
         const newUrl = 'https://forkify-front.herokuapp.com';

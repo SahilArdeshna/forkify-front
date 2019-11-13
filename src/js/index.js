@@ -6,7 +6,6 @@ import Like from "./models/Like";
 import * as logout from "./models/Logout";
 import * as UserProfile from "./models/UserProfile";
 import * as loginView from "./views/loginView";
-import * as signupView from "./views/signupView";
 import * as searchView from "./views/searchView";
 import * as homeView from './views/homeView';
 import * as recipeView from "./views/recipeView";
@@ -379,26 +378,21 @@ export const controlSearch = async () => {
     renderLoader($('.results'));
 
     try {
+      let res;
       if (!favRecipe) {
         // 4) Search for recipes from WEB
-        await state.search.getResults();
+        res = await state.search.getResults();
       } else {
         // 4) Search for recipes on DATABASE
-        await state.search.getResultsFromDb();
+        res = await state.search.getResultsFromDb();
       }
 
       // 5) Render results on UI
       clearLoader();
-      searchView.renderResults(state.search.result);
-
-      // show edit and delete button
-      // searchView.showButtons();
-
-      // // Call edit recipe function
-      // searchView.editRecipe();
-
-      // // Call delete recipe function
-      // searchView.deleteRecipeFromDb(); 
+      
+      if (res) {
+        searchView.renderResults(state.search.result);
+      }
 
     } catch (error) {
       alert("Something went wrong with search");

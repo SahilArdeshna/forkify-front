@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import { apiAppID, apiKey } from '../config';
 
 export default class Search {
   constructor(query) {
@@ -20,6 +19,8 @@ export default class Search {
         });
         // const res = await axios(`${proxy}https://www.food2fork.com/api/search?key=${key}&q=${this.query}`);
         this.result = res.data.hits;
+        console.log(this.result);
+        return this.result;
     } catch(error) {
         alert(error);
     }
@@ -42,7 +43,8 @@ export default class Search {
         resData.favRecipe = true;
         recipes.push({recipe: resData})
       });       
-      this.result = recipes;      
+      this.result = recipes;
+      return this.result; 
     } catch(error) {
       alert(error);
     }

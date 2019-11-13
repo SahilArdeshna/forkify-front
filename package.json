@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
-    "start": "node app.js"
+    "start": "node app.js",
+    "runstart": "webpack-dev-server --mode development --open"
   },
   "author": "Sahil Ardeshna",
   "license": "ISC",

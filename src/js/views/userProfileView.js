@@ -45,8 +45,7 @@ export const userData = (user) => {
                             <input class="btn btn-primary user__data-update" value="Update User Info">
                             <br><br>
                             <input type="button" value="go back" title="Go Back" class="btn go__back">                        
-                        </div>
-                        
+                        </div>                        
                     </form>
                 </div>
             </div>

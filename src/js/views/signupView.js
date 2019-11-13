@@ -2,8 +2,6 @@ import { elements } from './base';
 import * as loginView from './loginView';
 import * as Signup from '../models/Signup';
 
-// let loginView;
-// let signupView;
 export const signupPage = () => {
     const html = ` 
         <div class="card card__signup">
