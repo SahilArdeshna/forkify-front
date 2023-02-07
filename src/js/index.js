@@ -7,7 +7,7 @@ import * as logout from "./models/Logout";
 import * as UserProfile from "./models/UserProfile";
 import * as loginView from "./views/loginView";
 import * as searchView from "./views/searchView";
-import * as homeView from './views/homeView';
+import * as homeView from "./views/homeView";
 import * as recipeView from "./views/recipeView";
 import * as listView from "./views/listView";
 import * as likeView from "./views/likeView";
@@ -17,21 +17,17 @@ import { renderLoader, clearLoader } from "./views/base";
 
 // Check for user token
 export const checkUserToken = async () => {
-  const token = window.localStorage.getItem('forkifyToken');  
+  const token = window.localStorage.getItem("forkifyToken");
 
-  if (token) {        
-
-    // Show main page    
+  if (token) {
+    // Show main page
     homeView.mainPage();
-    
-    $(document).ready(async () => {      
 
+    $(document).ready(async () => {
       // Display container
       showContainer();
     });
-
-  } else {    
-
+  } else {
     // Display login page
     await loginView.login();
   }
@@ -43,8 +39,7 @@ checkUserToken();
 let state = {};
 let favRecipe;
 
-async function showContainer () {  
-
+async function showContainer() {
   // Update user name
 
   // Get user data from database
@@ -61,30 +56,29 @@ async function showContainer () {
 
     // Get liked recipes from database and store them in likes
     await state.likes.getLikedRecipesFromDB();
-    
+
     // Toggle likes menu button
     likeView.toggleLikesMenu(await state.likes.getNumLikes());
 
     //render the existing likes
-    state.likes.likes.forEach(like => likeView.renderLike(like));
-
+    state.likes.likes.forEach((like) => likeView.renderLike(like));
   } else {
     //render the existing likes
-    state.likes.likes.forEach(like => likeView.renderLike(like));
+    state.likes.likes.forEach((like) => likeView.renderLike(like));
   }
 
   /*
-  * SEARCH CONTROLLER
-  */   
+   * SEARCH CONTROLLER
+   */
 
-  $('.search').on("submit", e => {
+  $(".search").on("submit", (e) => {
     e.preventDefault();
 
     favRecipe = false;
     controlSearch();
   });
 
-  $('.results__pages').on("click", e => {
+  $(".results__pages").on("click", (e) => {
     const btn = e.target.closest(".btn-inline");
 
     if (btn) {
@@ -95,26 +89,26 @@ async function showContainer () {
   });
 
   /*
-  * RECIPE CONTROLLER
-  */
+   * RECIPE CONTROLLER
+   */
 
   const controlRecipe = async () => {
     // Get id from url
     const id = window.location.hash.replace("#", "");
-    
+
     if (id) {
       // Prepare UI changes
       recipeView.clearRecipe();
-      renderLoader($('.recipe'));
+      renderLoader($(".recipe"));
 
       // remove heghlight selected
       searchView.removeHighlightSelected();
 
       if (state.search) {
-        state.search.result.forEach(el => {
+        state.search.result.forEach((el) => {
           if (el.recipe.uri) {
-            const recipeId = el.recipe.uri.split('#')[1];
-            if (recipeId === id) {  
+            const recipeId = el.recipe.uri.split("#")[1];
+            if (recipeId === id) {
               // Highlight Selected search item
               searchView.highlightSelected(id);
             }
@@ -131,7 +125,7 @@ async function showContainer () {
       state.recipe = new Recipe(id);
 
       let result;
-      try {      
+      try {
         if (!favRecipe) {
           // Get recipe data from WEB
           result = await state.recipe.getRecipe();
@@ -139,24 +133,23 @@ async function showContainer () {
           // Get recipe from DATABASE
           result = await state.recipe.getRecipeFromDb();
         }
-      
+
         if (result) {
           // parse ingredients
           state.recipe.parseIngredients();
-        
+
           if (!state.recipe.time || state.recipe.time < 5) {
             // Calculate servings and time
             state.recipe.calcTime();
             state.recipe.calcServings();
           }
-  
+
           // Clear loader
           clearLoader();
 
           // Render recipe
           recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
-        }        
-
+        }
       } catch (err) {
         alert("Error processing recipe!");
       }
@@ -165,41 +158,39 @@ async function showContainer () {
 
   // window.addEventListener('hashchange', controlRecipe);
   // window.addEventListener('load', controlRecipe);
-  
 
   $(document).ready(() => {
-    ["hashchange", 'load'].forEach(event =>
-      window.addEventListener(event, e => {
-        const id = window.location.hash.replace("#", "").split('_')[0];
+    ["hashchange", "load"].forEach((event) =>
+      window.addEventListener(event, (e) => {
+        const id = window.location.hash.replace("#", "").split("_")[0];
         if (id == "recipe") {
-          favRecipe = false; 
+          favRecipe = false;
         } else {
           favRecipe = true;
         }
-        
+
         controlRecipe();
       })
     );
   });
 
-
   /*
-  * LIST CONTROLLER
-  */
+   * LIST CONTROLLER
+   */
 
   const controlList = () => {
     // create new list  if there is not list
     if (!state.list) state.list = new List();
 
     // add each ingredient to the list and UI
-    state.recipe.ingredients.forEach(el => {
+    state.recipe.ingredients.forEach((el) => {
       const item = state.list.addItem(el.count, el.unit, el.ingredient);
       listView.renderItem(item);
     });
   };
 
   // Handle delete and Update list item events
-  $('.shopping__list').on("click", e => {
+  $(".shopping__list").on("click", (e) => {
     const id = e.target.closest(".shopping__item").dataset.itemid;
 
     // Handle delete button
@@ -218,20 +209,18 @@ async function showContainer () {
   });
 
   /*
-  * LIKES CONTROLLER
-  */
+   * LIKES CONTROLLER
+   */
 
-  const controlLike = async () => {    
+  const controlLike = async () => {
     if (state.recipe && favRecipe == false) {
       const currentID = state.recipe.id;
 
       // User has NOT yet like current recipe
       if (!state.likes.isLiked(currentID)) {
         // Add like to the state
-        const newLike = await state.likes.addLike(
-          state.recipe
-        );
-        
+        const newLike = await state.likes.addLike(state.recipe);
+
         // Get liked recipes from database and store them in likes
         await state.likes.getLikedRecipesFromDB();
 
@@ -243,7 +232,7 @@ async function showContainer () {
       } else {
         // Remove liked recipe from database
         await state.likes.deleteLikedRecipe(currentID);
-        
+
         // Remove like from the list
         state.likes.deleteLike(currentID);
 
@@ -262,12 +251,12 @@ async function showContainer () {
     // Toggle like menu button
     likeView.toggleLikesMenu(likedRecipeLength);
   };
-  
+
   // Call control like function
-  controlLike();    
+  controlLike();
 
   // Handling recipe button clicks
-  $('.recipe').on("click", e => {
+  $(".recipe").on("click", (e) => {
     if (e.target.matches(".btn-decrease, .btn-decrease *")) {
       // Decrease button is clicked
       if (state.recipe.servings > 1) {
@@ -285,13 +274,13 @@ async function showContainer () {
       // Add recipe to favourite list
       controlLike();
     }
-  });  
+  });
 
   /*
     Profile
   */
 
-  $('.user__detail').on('click', e => {
+  $(".user__detail").on("click", (e) => {
     e.preventDefault();
 
     // Call user info function
@@ -302,7 +291,7 @@ async function showContainer () {
     Add Recipe
   */
 
-  $('.add__recipe').on("click", e => {
+  $(".add__recipe").on("click", (e) => {
     e.preventDefault();
     controlAddRecipe();
   });
@@ -319,7 +308,7 @@ async function showContainer () {
     controlSearch();
   };
 
-  $('.favorite__recipes').on("click", e => {
+  $(".favorite__recipes").on("click", (e) => {
     e.preventDefault();
     controlFavoriteRecipes();
   });
@@ -329,12 +318,11 @@ async function showContainer () {
   */
 
   $(document).ready(() => {
-    $('.logout').click(async (e) => {
+    $(".logout").click(async (e) => {
       e.preventDefault();
 
-      const newUrl = 'https://forkify-front.herokuapp.com';
-      history.pushState({}, null, newUrl);
-          
+      history.pushState({}, null, process.env.APP_URL);
+
       // Logout user
       await logout.logout();
 
@@ -342,7 +330,7 @@ async function showContainer () {
       favRecipe = false;
     });
   });
-};
+}
 
 // RECIPE SEARCH CONTROL FUNCTION
 export const controlSearch = async () => {
@@ -352,8 +340,8 @@ export const controlSearch = async () => {
   if (query != "") {
     favRecipe = false;
   }
-  
-  if (query || favRecipe) {  
+
+  if (query || favRecipe) {
     // 2) New search object and add to state
     state.search = new Search(query);
 
@@ -367,9 +355,9 @@ export const controlSearch = async () => {
 
     // check for DOM elements
     if (
-      $('.results')[0].style.display == "none" &&
-      $('.recipe')[0].style.display !== "none" &&
-      $('.shopping')[0].style.display == "none"
+      $(".results")[0].style.display == "none" &&
+      $(".recipe")[0].style.display !== "none" &&
+      $(".shopping")[0].style.display == "none"
     ) {
       searchView.insertDomElements();
     }
@@ -378,7 +366,7 @@ export const controlSearch = async () => {
     searchView.clearResults();
 
     // spinner Loader
-    renderLoader($('.results'));
+    renderLoader($(".results"));
 
     try {
       let res;
@@ -392,11 +380,10 @@ export const controlSearch = async () => {
 
       // 5) Render results on UI
       clearLoader();
-      
+
       if (res) {
         searchView.renderResults(state.search.result);
       }
-
     } catch (error) {
       alert("Something went wrong with search");
       clearLoader();
@@ -406,7 +393,6 @@ export const controlSearch = async () => {
 
 //  USER DATA VIEW FUCNTION
 export const userProfile = async () => {
-
   // Get user data from database
   const result = await UserProfile.getUserData();
 
@@ -422,7 +408,6 @@ export const userProfile = async () => {
 
 // ADD RECIPEVIEW FUNCTION
 export const controlAddRecipe = () => {
-
   // Clear UI
   addRecipeView.clearUI();
 
@@ -430,6 +415,6 @@ export const controlAddRecipe = () => {
   addRecipeView.recipeForm();
 };
 
-$(window).on('load', (e) => {
-  history.pushState({}, null, 'https://forkify-front.herokuapp.com');
+$(window).on("load", (e) => {
+  history.pushState({}, null, process.env.APP_URL);
 });

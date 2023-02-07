@@ -1,9 +1,9 @@
-import { elements } from './base';
-import * as loginView from './loginView';
-import * as Signup from '../models/Signup';
+import { elements } from "./base";
+import * as loginView from "./loginView";
+import * as Signup from "../models/Signup";
 
 export const signupPage = () => {
-    const html = ` 
+  const html = ` 
         <div class="card card__signup">
             <div id="errorMsg" class="errorMsg"></div>
             <form class="text-center border border-light">            
@@ -20,49 +20,48 @@ export const signupPage = () => {
                 <input type="email" id="defaultRegisterFormEmail" name="email" class="form-control mb-4 email" placeholder="E-mail" required>
                 <input type="password" id="defaultRegisterFormPassword" name="password" class="form-control password" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" required>
 
-                <input class="btn btn-info my-4 signup" value="Sign Up">
+                <button class="btn btn-info my-4 signup">Sign Up</button
             </form>
             <hr>
             <div class="sign">
                 <p>Sign In</p>
-                <input class="btn btn-info my-4 sign__in" value="Sign In">
+                <button class="btn btn-info my-4 sign__in">Sign In</button>
             </div>
         </div>        
     `;
 
-    elements.body.innerHTML = '';
-    elements.body.insertAdjacentHTML('afterbegin', html);
+  elements.body.innerHTML = "";
+  elements.body.insertAdjacentHTML("afterbegin", html);
 
-    $(document).ready(() => {
-        // Display login page
-        gotoSignin();
-    
-        // Call  signup function
-        userSignup();
-    });
+  $(document).ready(() => {
+    // Display login page
+    gotoSignin();
+
+    // Call  signup function
+    userSignup();
+  });
 };
 
-
 const gotoSignin = () => {
-    const signin = document.querySelector('.sign__in'); 
-    $(signin).click((e) => {
-        e.preventDefault();
+  const signin = document.querySelector(".sign__in");
+  $(signin).click((e) => {
+    e.preventDefault();
 
-        // Show login page
-        loginView.login();
-    });
+    // Show login page
+    loginView.login();
+  });
 };
 
 const userSignup = () => {
-    $('.signup').click((e) => {
-        e.preventDefault();        
-        const userData = {
-            firstName: $('.first__name').val(),
-            lastName: $('.last__name').val(),
-            email: $('.email').val(),
-            password: $('.password').val()
-        };
-        
-        Signup.signupWithData(userData);
-    });
+  $(".signup").click((e) => {
+    e.preventDefault();
+    const userData = {
+      firstName: $(".first__name").val(),
+      lastName: $(".last__name").val(),
+      email: $(".email").val(),
+      password: $(".password").val(),
+    };
+
+    Signup.signupWithData(userData);
+  });
 };

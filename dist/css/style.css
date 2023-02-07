@@ -36,8 +36,8 @@ body {
   );
   background-image: linear-gradient(to right bottom, #fbdb89, #f48982);
   background-size: cover;
-  background-repeat: no-repeat;  
-  min-height: calc(100vh - 0 * 4vw);  
+  background-repeat: no-repeat;
+  min-height: calc(100vh - 0 * 4vw);
 }
 
 .container {
@@ -483,7 +483,7 @@ body {
   padding: 0.5rem 1rem;
 }
 .go__back-recipe {
-  margin: 5rem 0 0 23.7rem;  
+  margin: 5rem 0 0 23.7rem;
 }
 .recipe__fig {
   height: 30rem;
@@ -852,7 +852,7 @@ body {
 .form__button button {
   margin: 1.5rem 0 0 0;
   padding: 0.5rem 1rem;
-  display: inline-flex;  
+  display: inline-flex;
 }
 .well {
   padding: 0 15rem;
@@ -881,19 +881,19 @@ body {
 }
 .card__signin,
 .card__signup {
-  width: 35%;  
+  width: 35%;
   top: 9rem;
-  left: 32.5%
+  left: 32.5%;
 }
 .card__signin form,
-.card__signup form {  
+.card__signup form {
   padding: 3rem 3rem 0 3rem;
 }
 .card__signin h2,
 .card__signup h2 {
   font-weight: 700;
 }
-.card__signin input{
+.card__signin input {
   width: 75%;
   margin-left: 12.5%;
 }
@@ -901,19 +901,28 @@ body {
 .card__signup input {
   padding: 0.5rem 1rem;
 }
-.card__signin .signin, 
-.signup {
+.card__signin .signin,
+.card__signup .signup {
   width: 50%;
-  margin-left: 25%;
+  justify-content: center;
+}
+.card__signin .signin,
+.card__signup .signup {
+  margin: 0 auto;
 }
 .sign {
-  width: 100%;  
+  width: 100%;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 .sign p {
   font-weight: 500;
   display: inline-flex;
   font-size: 1.5rem;
+  margin: 0;
 }
 .sign input {
   display: inline-flex;
@@ -923,7 +932,7 @@ body {
 .buttons {
   display: none;
 }
-.edit, 
+.edit,
 .delete {
   width: 5rem;
   border-radius: 2px;
@@ -952,7 +961,7 @@ body {
 .errorMsg {
   display: none;
   font-size: 16px;
-  text-align: center;  
+  text-align: center;
   padding: 0.5rem;
   color: #ff0000;
   background-color: #ffb0b0;
